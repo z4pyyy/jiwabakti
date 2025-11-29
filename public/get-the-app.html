@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Get JiwaBakti</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:0;background:#fafafa}
+    .wrap{max-width:640px;margin:10vh auto;padding:24px;background:#fff;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.08)}
+    h1{margin:0 0 12px}
+    p{color:#555}
+    .row{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+    .btn{display:inline-block;padding:12px 16px;border-radius:8px;text-decoration:none}
+    .primary{background:#1a73e8;color:#fff}
+    .secondary{background:#eee;color:#111}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Get JiwaBakti</h1>
+    <p>Install the app to open shared links directly in JiwaBakti.</p>
+
+    <div class="row">
+      <a id="openApp" class="btn primary" href="#">Open in App</a>
+      <a id="openPlay" class="btn secondary" href="#">Open in Google Play</a>
+    </div>
+
+    <p style="margin-top:16px;color:#777">Already installed? Tap “Open in App”.</p>
+  </div>
+
+  <script>
+(function () {
+  const ANDROID_PKG = 'com.example.jiwa_bakti'; // leave for Play button
+  const PLAY_URL = `https://play.google.com/store/apps/details?id=${ANDROID_PKG}`;
+
+  const params = new URLSearchParams(location.search);
+  const code = params.get('code') || '';
+
+  // Button links
+  const openApp = document.getElementById('openApp');
+  const openPlay = document.getElementById('openPlay');
+
+  // 👉 Use direct custom-scheme (no intent://, no fallback param)
+  openApp.href = code ? `jiwabakti://news/${encodeURIComponent(code)}` : 'jiwabakti://news';
+
+  // Play fallback only when user taps
+  openPlay.href = PLAY_URL;
+
+  // Optional: you can try to open the app once *without* any fallback,
+  // but do NOT redirect to Play automatically.
+  // try { window.location.href = openApp.href; } catch (e) {}
+})();
+</script>
+
+
+</body>
+</html>

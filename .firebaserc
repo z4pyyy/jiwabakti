@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "webnyou-flow-link"
+  },
+  "targets": {
+    "webnyou-flow-link": {
+      "hosting": {
+        "flowlinks": [
+          "webnyou-flow-link-webnyou-jiwa-bakti-flowlinks"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

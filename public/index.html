@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Opening JiwaBakti…</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:0}
+    .wrap{padding:24px;max-width:560px;margin:10vh auto}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h2>Opening JiwaBakti…</h2>
+    <p>If nothing happens, we’ll send you to the app store.</p>
+  </div>
+
+  <script>
+  (async () => {
+    // ---- configure these:
+    const ANDROID_PKG = 'com.example.jiwa_bakti'; // <-- replace with your real package ID
+    // const PLAY_URL   = `https://play.google.com/store/apps/details?id=${ANDROID_PKG}`;
+  const FALLBACK = "/get-the-app";
+
+    // iOS:
+    // const IOS_APP_STORE = 'https://apps.apple.com/app/idXXXXXXXXX';
+
+    // Get the short code from the path: /27Ramn
+    const code = location.pathname.replace(/^\/+/, '').split('/')[0];
+
+    // If this isn't a short code (e.g. root or assets), do nothing.
+    if (!code || code.includes('.')) return;
+
+    // Resolve the code so we still know what it maps to (optional for this page)
+    let data = null;
+    try {
+      const res = await fetch(`/api/resolve/${encodeURIComponent(code)}`);
+      if (res.ok) data = await res.json();
+    } catch (_) {}
+
+    const ua = navigator.userAgent || '';
+    const isAndroid = /Android/i.test(ua);
+    const isIOS = /iPhone|iPad|iPod/i.test(ua);
+
+    // If the app opens, the page goes to background; cancel fallback.
+    let to = setTimeout(() => {}, 0);
+    const armFallback = (url) => {
+      clearTimeout(to);
+      to = setTimeout(() => location.replace(url), 1500);
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden') clearTimeout(to);
+      });
+    };
+
+    if (isAndroid) {
+      // Try to open the app using an intent that targets your App Links host.
+      // The host+path here is the SAME URL the user tapped (this page).
+      const hostPath = `${location.host}${location.pathname}`;
+      const intent = `intent://${hostPath}` +
+                     `#Intent;scheme=https;package=${ANDROID_PKG};` +
+                     `S.browser_fallback_url=${encodeURIComponent(PLAY_URL)};end`;
+
+      armFallback(PLAY_URL);
+      location.href = intent;
+      return;
+    }
+
+    if (isIOS) {
+      // (Optional) Universal Links later. For now just go to App Store.
+      armFallback(IOS_APP_STORE);
+      // If you already have a custom scheme, you can try:
+      // location.href = `jiwabakti://open/${code}`;
+      return;
+    }
+
+    // Desktop / others: just send to the resolved web URL or home
+    if (data && data.link) {
+      location.replace(data.link);
+    }
+  })();
+  </script>
+</body>
+</html>
