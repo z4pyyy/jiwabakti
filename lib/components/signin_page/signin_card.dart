@@ -415,43 +415,43 @@ Future<void> _signInWithGoogle() async {
               ),
             ),
             const SizedBox(height: 15),
-            Center(
-              child: SizedBox(
-                width: 70.w,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.black,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      side: const BorderSide(color: Colors.black, width: 1.5),
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                  ),
-                  onPressed: _isLoading ? null : (){},
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(left: 10.w),
-                        width: 30,
-                        child: const Icon(FontAwesomeIcons.apple, size: 26,),
-                      ),
-                      const SizedBox(width: 10,),
-                      const Text(
-                        "Continue with Apple",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            // Center(
+            //   child: SizedBox(
+            //     width: 70.w,
+            //     child: ElevatedButton(
+            //       style: ElevatedButton.styleFrom(
+            //         backgroundColor: Colors.white,
+            //         foregroundColor: Colors.black,
+            //         elevation: 0,
+            //         shape: RoundedRectangleBorder(
+            //           borderRadius: BorderRadius.circular(12),
+            //           side: const BorderSide(color: Colors.black, width: 1.5),
+            //         ),
+            //         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            //       ),
+            //       onPressed: _isLoading ? null : (){},
+            //       child: Row(
+            //         mainAxisAlignment: MainAxisAlignment.start,
+            //         mainAxisSize: MainAxisSize.max,
+            //         children: [
+            //           Container(
+            //             margin: EdgeInsets.only(left: 10.w),
+            //             width: 30,
+            //             child: const Icon(FontAwesomeIcons.apple, size: 26,),
+            //           ),
+            //           const SizedBox(width: 10,),
+            //           const Text(
+            //             "Continue with Apple",
+            //             style: TextStyle(
+            //               fontSize: 16,
+            //               fontWeight: FontWeight.w500,
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // ),
             const SizedBox(height: 10),
             Center(
               child: SizedBox(
@@ -478,20 +478,21 @@ Future<void> _signInWithGoogle() async {
                           ),
                         )
                       : Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            Container(
-                              margin: EdgeInsets.only(left: 10.w),
-                              width: 30,
-                              child: const Icon(FontAwesomeIcons.google, size: 20,),
-                            ),
-                            const SizedBox(width: 10,),
-                            const Text(
-                              "Continue with Google",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
+                            const Icon(FontAwesomeIcons.google, size: 20),
+                            const SizedBox(width: 12),
+                            Flexible(
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  "Continue with Google",
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
                               ),
                             ),
                           ],

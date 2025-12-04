@@ -1,4 +1,4 @@
-package com.example.jiwa_bakti;
+package com.jiwabakti.app;
 
 import io.flutter.embedding.android.FlutterActivity;
 

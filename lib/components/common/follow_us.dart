@@ -7,14 +7,42 @@ class FollowUs extends StatelessWidget{
     super.key,
   });
 
-  void _launchUrl(String link) async{
-    final url = Uri.parse(link);
+Future<void> _launchUrl(String link) async {
+  final Uri url = Uri.parse(link);
+
+  try {
     if (await canLaunchUrl(url)) {
-      await launchUrl(url, mode: LaunchMode.externalApplication);
-    } else {
-      print("Could not launch URL");
+      final bool launched = await launchUrl(
+        url,
+        mode: LaunchMode.externalApplication,
+      );
+
+      if (launched) return;
+    }
+
+    final bool launchedFallback = await launchUrl(
+      url,
+      mode: LaunchMode.inAppBrowserView,
+    );
+
+    if (!launchedFallback) {
+      debugPrint("ERROR: Could not launch URL (fallback failed): $link");
+    }
+
+  } catch (e) {
+    debugPrint("LAUNCH ERROR: $e");
+
+    try {
+      await launchUrl(
+        url,
+        mode: LaunchMode.externalNonBrowserApplication,
+      );
+    } catch (e2) {
+      debugPrint("FINAL LAUNCH ERROR: $e2");
     }
   }
+}
+
 
   @override
   Widget build(BuildContext context){
@@ -28,8 +56,7 @@ class FollowUs extends StatelessWidget{
       child: Column(
         children: [
           Text(
-            "Follow us on Instagram and join our Telegram and/or WhatsApp channel(s) for the latest news "
-            "you don't want to miss.",
+            "Ikuti kami di Instagram, Facebook, X dan Tiktok untuk berita terkini yang anda tidak mahu terlepas!",
             style: TextStyle(
               color: Colors.grey[600],
               fontSize: 14
