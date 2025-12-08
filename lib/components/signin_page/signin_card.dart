@@ -329,8 +329,7 @@ Future<void> _signInWithGoogle() async {
                 isDense: true,
                 borderRadius: BorderRadius.circular(5.sp),
                 controller: _passwordTextEditingController,
-                validator: (value)
-                  => validatePassword(true, value),
+                validator: validatePassword,
                 onChanged: (value){
                   onPasswordChange();
                 },
@@ -501,21 +500,21 @@ Future<void> _signInWithGoogle() async {
               ),
             ),
             const SizedBox(height: 15),
-            Center(
-              child: InkWell(
-                onTap: (){
-                  // context.push("/forgot-password");
-                },
-                child: const Text(
-                  "Lupa kata laluan?",
-                  style: TextStyle(
-                    fontSize: 16,
-                    decoration: TextDecoration.underline,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ),
+            // Center(
+            //   child: InkWell(
+            //     onTap: (){
+            //       context.push("/forgot-password");
+            //     },
+            //     child: const Text(
+            //       "Lupa kata laluan?",
+            //       style: TextStyle(
+            //         fontSize: 16,
+            //         decoration: TextDecoration.underline,
+            //         fontWeight: FontWeight.w500,
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

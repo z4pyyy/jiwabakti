@@ -8,10 +8,20 @@ String? validateEmail(String? value) {
   return null;
 }
 
-String? validatePassword(bool isLogin, String? value) {
-  RegExp regExp = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$&*~]).{8,}$');
-  if (value != null && value.isEmpty) return 'Please enter your password';
-  if (!isLogin && !regExp.hasMatch(value!)) return 'Please enter a valid password';
+String? validatePassword(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'Please enter your password';
+  }
+
+  // Your password rules
+  RegExp regExp = RegExp(
+      r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$'
+  );
+
+  if (!regExp.hasMatch(value)) {
+    return 'Password must contain uppercase, lowercase, number and be 8+ chars';
+  }
+
   return null;
 }
 

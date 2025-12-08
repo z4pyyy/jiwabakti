@@ -67,66 +67,66 @@ class SignupOptionPageMainState extends State<SignupOptionPageMain> {
             //     ),
             //   ),
             // ),
-            SizedBox(
-              width: 70.w,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.black,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12), // Rounded border
-                    side: const BorderSide(color: Colors.black, width: 1.5), // Optional border
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                ),
-                onPressed: (){
-                  final user = FirebaseAuth.instance.currentUser;
-                  if (user == null) {
-                    // If there's no authenticated user, pass empty values or handle accordingly
-                    context.push(
-                      "/signup/google",
-                      extra: GoogleSignupData(
-                        uid: "",
-                        email: "",
-                        name: null,
-                        photo: null,
-                      ),
-                    );
-                  } else {
-                    context.push(
-                      "/signup/google",
-                      extra: GoogleSignupData(
-                        uid: user.uid,
-                        email: user.email ?? "",
-                        name: user.displayName,
-                        photo: user.photoURL,
-                      ),
-                    );
-                  }
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 10.w),
-                      width: 30,
-                      child: const Icon(FontAwesomeIcons.google, size: 20,),
-                    ),
-                    const SizedBox(width: 10,),
-                    const Text(
-                      "Continue with Google",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-const SizedBox(height: 15),
+            // SizedBox(
+            //   width: 70.w,
+            //   child: ElevatedButton(
+            //     style: ElevatedButton.styleFrom(
+            //       backgroundColor: Colors.white,
+            //       foregroundColor: Colors.black,
+            //       elevation: 0,
+            //       shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(12), // Rounded border
+            //         side: const BorderSide(color: Colors.black, width: 1.5), // Optional border
+            //       ),
+            //       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            //     ),
+            //     onPressed: (){
+            //       final user = FirebaseAuth.instance.currentUser;
+            //       if (user == null) {
+            //         // If there's no authenticated user, pass empty values or handle accordingly
+            //         context.push(
+            //           "/signup/google",
+            //           extra: GoogleSignupData(
+            //             uid: "",
+            //             email: "",
+            //             name: null,
+            //             photo: null,
+            //           ),
+            //         );
+            //       } else {
+            //         context.push(
+            //           "/signup/google",
+            //           extra: GoogleSignupData(
+            //             uid: user.uid,
+            //             email: user.email ?? "",
+            //             name: user.displayName,
+            //             photo: user.photoURL,
+            //           ),
+            //         );
+            //       }
+            //     },
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.start,
+            //       mainAxisSize: MainAxisSize.max,
+            //       children: [
+            //         Container(
+            //           margin: EdgeInsets.only(left: 10.w),
+            //           width: 30,
+            //           child: const Icon(FontAwesomeIcons.google, size: 20,),
+            //         ),
+            //         const SizedBox(width: 10,),
+            //         const Text(
+            //           "Continue with Google",
+            //           style: TextStyle(
+            //             fontSize: 16,
+            //             fontWeight: FontWeight.w500,
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+            const SizedBox(height: 15),
             SizedBox(
               width: 70.w,
               child: ElevatedButton(

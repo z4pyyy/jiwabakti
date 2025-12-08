@@ -20,6 +20,7 @@ import 'package:sizer/sizer.dart';
 import 'package:jiwa_bakti/models/google.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
+
 class SignupMain extends StatefulWidget {
   final String option;
   final GoogleSignupData? googleData;
@@ -687,11 +688,59 @@ void initState() {
                       ),
                     ),
                       const SizedBox(height: 20),
-                      if(isEmail)...[
-                                              ] else ...[
-                        // GOOGLE SIGNUP → No password fields
+                      if (isEmail) ...[
+                        const Text(
+                          "Kata Laluan",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        RoundedTextFormField(
+                          focusNode: passwordFocusNode,
+                          formFieldKey: _passwordFieldKey,
+                          controller: _passwordTextEditingController,
+                          label: "",
+                          obscureText: true,
+                          isDense: true,
+                          validator: validatePassword,
+                          showTick: passwordValidated,
+                          onChanged: (value) {
+                            passwordOnChange();
+                          },
+                        ),
+                        const SizedBox(height: 20),
+
+                        const Text(
+                          "Sahkan Kata Laluan",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        RoundedTextFormField(
+                          focusNode: confirmPasswordFocusNode,
+                          formFieldKey: _confirmFieldKey,
+                          controller: _confirmPasswordTextEditingController,
+                          label: "",
+                          obscureText: true,
+                          isDense: true,
+                          validator: (value) => validateConfirmPassword(
+                            value,
+                            _passwordTextEditingController.text,
+                          ),
+                          showTick: confirmPasswordValidated,
+                          onChanged: (value) {
+                            passwordOnChange();
+                          },
+                        ),
+                        const SizedBox(height: 20),
+                      ] else ...[
+                        // GOOGLE SIGNUP — No password fields.
                       ],
-                      // =====================================================================
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -844,7 +893,7 @@ void initState() {
                 showFToast(
                   context: context,
                   status: Status.success,
-                  message: "Email already registered. Signing you in...",
+                  message: "Email already registered.",
                 );
                 
                 // Try to sign in

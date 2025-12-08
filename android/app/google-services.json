@@ -48,6 +48,50 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:825187216258:android:605a50c37c10c51c7e3d9b",
+        "android_client_info": {
+          "package_name": "com.jiwabakti.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "825187216258-i9u7skourhi7ect4tepj6tu7jmoldriu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jiwabakti.app",
+            "certificate_hash": "21a3828e8500c95edfce8e9aed1855653c2db5bb"
+          }
+        },
+        {
+          "client_id": "825187216258-q3c1olvufen512pto09pfkli2pi2br7v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAy8LNwGc3lUswXOz7QWPPmj3mngbEYIeo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "825187216258-q3c1olvufen512pto09pfkli2pi2br7v.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "825187216258-0hi0bm0j9jt2arp23b0fv3d5s0r425a9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.jiwaBakti"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

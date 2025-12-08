@@ -41,7 +41,7 @@ android {
     defaultConfig {
         applicationId "com.jiwabakti.app"
         minSdkVersion flutter.minSdkVersion
-        targetSdkVersion 34
+        targetSdkVersion 35
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true

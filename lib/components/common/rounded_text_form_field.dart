@@ -25,6 +25,7 @@ class RoundedTextFormField extends StatefulWidget {
   final FocusNode? focusNode;
   final Key? formFieldKey;
   final bool showTick;
+  final bool obscureText;
 
   const RoundedTextFormField({
     Key? key,
@@ -49,6 +50,7 @@ class RoundedTextFormField extends StatefulWidget {
     this.focusNode,
     this.formFieldKey,
     this.showTick = false,
+    this.obscureText = false,
   }) : super(key: key);
 
   @override
@@ -61,7 +63,7 @@ class _RoundedTextFormFieldState extends State<RoundedTextFormField> {
   @override
   void initState() {
     super.initState();
-    _isObscured = widget.isPasswordField;
+    _isObscured = widget.obscureText;
   }
 
   @override
