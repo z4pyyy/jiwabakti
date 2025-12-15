@@ -58,6 +58,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "825187216258-2tfu34d5k65cskp5j20h2uqu4ego9rg4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jiwabakti.app",
+            "certificate_hash": "e046adba129b2553d1c1ac2ad9649c8855801eb4"
+          }
+        },
+        {
           "client_id": "825187216258-i9u7skourhi7ect4tepj6tu7jmoldriu.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

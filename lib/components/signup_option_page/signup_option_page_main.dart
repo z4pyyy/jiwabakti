@@ -1,4 +1,7 @@
+import 'package:flutter/foundation.dart'
+    show defaultTargetPlatform, kIsWeb, TargetPlatform;
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
 
@@ -10,6 +13,12 @@ class SignupOptionPageMain extends StatefulWidget {
 }
 
 class SignupOptionPageMainState extends State<SignupOptionPageMain> {
+
+  bool get _isAndroid =>
+      !kIsWeb && defaultTargetPlatform == TargetPlatform.android;
+
+  bool get _isIOS =>
+      !kIsWeb && defaultTargetPlatform == TargetPlatform.iOS;
 
   @override
   Widget build(BuildContext context) {
@@ -27,102 +36,88 @@ class SignupOptionPageMainState extends State<SignupOptionPageMain> {
               ),
             ),
             const SizedBox(height: 15),
-            // SizedBox(
-            //   width: 70.w,
-            //   child: ElevatedButton(
-            //     style: ElevatedButton.styleFrom(
-            //       backgroundColor: Colors.white,
-            //       foregroundColor: Colors.black,
-            //       elevation: 0,
-            //       shape: RoundedRectangleBorder(
-            //         borderRadius: BorderRadius.circular(12), // Rounded border
-            //         side: const BorderSide(color: Colors.black, width: 1.5), // Optional border
-            //       ),
-            //       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-            //     ),
-            //     onPressed: (){
-            //       context.push("/signup/apple");
-            //     },
-            //     child: Row(
-            //       mainAxisAlignment: MainAxisAlignment.start,
-            //       mainAxisSize: MainAxisSize.max,
-            //       children: [
-            //         Container(
-            //           margin: EdgeInsets.only(left: 10.w),
-            //           width: 30,
-            //           child: const Icon(FontAwesomeIcons.apple, size: 26,),
-            //         ),
-            //         const SizedBox(width: 10,),
-            //         const Text(
-            //           "Continue with Apple",
-            //           style: TextStyle(
-            //             fontSize: 16,
-            //             fontWeight: FontWeight.w500,
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
-            // SizedBox(
-            //   width: 70.w,
-            //   child: ElevatedButton(
-            //     style: ElevatedButton.styleFrom(
-            //       backgroundColor: Colors.white,
-            //       foregroundColor: Colors.black,
-            //       elevation: 0,
-            //       shape: RoundedRectangleBorder(
-            //         borderRadius: BorderRadius.circular(12), // Rounded border
-            //         side: const BorderSide(color: Colors.black, width: 1.5), // Optional border
-            //       ),
-            //       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-            //     ),
-            //     onPressed: (){
-            //       final user = FirebaseAuth.instance.currentUser;
-            //       if (user == null) {
-            //         // If there's no authenticated user, pass empty values or handle accordingly
-            //         context.push(
-            //           "/signup/google",
-            //           extra: GoogleSignupData(
-            //             uid: "",
-            //             email: "",
-            //             name: null,
-            //             photo: null,
-            //           ),
-            //         );
-            //       } else {
-            //         context.push(
-            //           "/signup/google",
-            //           extra: GoogleSignupData(
-            //             uid: user.uid,
-            //             email: user.email ?? "",
-            //             name: user.displayName,
-            //             photo: user.photoURL,
-            //           ),
-            //         );
-            //       }
-            //     },
-            //     child: Row(
-            //       mainAxisAlignment: MainAxisAlignment.start,
-            //       mainAxisSize: MainAxisSize.max,
-            //       children: [
-            //         Container(
-            //           margin: EdgeInsets.only(left: 10.w),
-            //           width: 30,
-            //           child: const Icon(FontAwesomeIcons.google, size: 20,),
-            //         ),
-            //         const SizedBox(width: 10,),
-            //         const Text(
-            //           "Continue with Google",
-            //           style: TextStyle(
-            //             fontSize: 16,
-            //             fontWeight: FontWeight.w500,
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
+            if (_isIOS) ...[
+              SizedBox(
+                width: 70.w,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      side: const BorderSide(color: Colors.black, width: 1.5),
+                    ),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  ),
+                  onPressed: () {
+                    context.push("/signin");
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 10.w),
+                        width: 30,
+                        child: const Icon(FontAwesomeIcons.apple, size: 26),
+                      ),
+                      const SizedBox(width: 10),
+                      const Text(
+                        "Sign in with Apple",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+            ],
+            if (_isAndroid) ...[
+              SizedBox(
+                width: 70.w,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      side: const BorderSide(color: Colors.black, width: 1.5),
+                    ),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  ),
+                  onPressed: () {
+                    context.push("/signin");
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 10.w),
+                        width: 30,
+                        child: const Icon(FontAwesomeIcons.google, size: 20),
+                      ),
+                      const SizedBox(width: 10),
+                      const Text(
+                        "Sign in with Google",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+            ],
             const SizedBox(height: 15),
             SizedBox(
               width: 70.w,

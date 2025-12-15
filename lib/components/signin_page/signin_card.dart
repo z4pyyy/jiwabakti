@@ -19,7 +19,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:theme_provider/theme_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/foundation.dart'
+    show defaultTargetPlatform, kIsWeb, TargetPlatform;
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:jiwa_bakti/models/social_signup_data.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -46,6 +47,12 @@ class SigninCardState extends State<SigninCard> {
   bool emailValidated = false;
   bool passwordValidated = false;
   bool _isLoading = false;
+
+  bool get _isAndroid =>
+      !kIsWeb && defaultTargetPlatform == TargetPlatform.android;
+
+  bool get _isIOS =>
+      !kIsWeb && defaultTargetPlatform == TargetPlatform.iOS;
 
   String _generateNonce([int length = 32]) {
     const charset =
@@ -584,103 +591,108 @@ class SigninCardState extends State<SigninCard> {
               ),
             ),
             const SizedBox(height: 15),
-            Center(
-              child: SizedBox(
-                width: 70.w,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.black,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      side: const BorderSide(color: Colors.black, width: 1.5),
+            if (_isIOS) ...[
+              Center(
+                child: SizedBox(
+                  width: 70.w,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        side: const BorderSide(color: Colors.black, width: 1.5),
+                      ),
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                     ),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                  ),
-                  onPressed: _isLoading ? null : _signInWithApple,
-                  child: _isLoading
-                      ? const SizedBox(
-                          height: 24,
-                          width: 24,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            valueColor: AlwaysStoppedAnimation(Colors.black),
-                          ),
-                        )
-                      : Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(FontAwesomeIcons.apple, size: 24),
-                            const SizedBox(width: 12),
-                            Flexible(
-                              child: FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: Text(
-                                  "Continue with Apple",
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
+                    onPressed: _isLoading ? null : _signInWithApple,
+                    child: _isLoading
+                        ? const SizedBox(
+                            height: 24,
+                            width: 24,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              valueColor: AlwaysStoppedAnimation(Colors.black),
+                            ),
+                          )
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(FontAwesomeIcons.apple, size: 24),
+                              const SizedBox(width: 12),
+                              Flexible(
+                                child: FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: Text(
+                                    "Continue with Apple",
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
+                            ],
+                          ),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 10),
-            Center(
-              child: SizedBox(
-                width: 70.w,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.black,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      side: const BorderSide(color: Colors.black, width: 1.5),
+              const SizedBox(height: 10),
+            ],
+            if (_isAndroid) ...[
+              Center(
+                child: SizedBox(
+                  width: 70.w,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        side: const BorderSide(color: Colors.black, width: 1.5),
+                      ),
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                  ),
-                  onPressed: _isLoading ? null : _signInWithGoogle,
-                  child: _isLoading
-                      ? const SizedBox(
-                          height: 24,
-                          width: 24,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            valueColor: AlwaysStoppedAnimation(Colors.black),
-                          ),
-                        )
-                      : Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(FontAwesomeIcons.google, size: 20),
-                            const SizedBox(width: 12),
-                            Flexible(
-                              child: FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: Text(
-                                  "Continue with Google",
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
+                    onPressed: _isLoading ? null : _signInWithGoogle,
+                    child: _isLoading
+                        ? const SizedBox(
+                            height: 24,
+                            width: 24,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              valueColor: AlwaysStoppedAnimation(Colors.black),
+                            ),
+                          )
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(FontAwesomeIcons.google, size: 20),
+                              const SizedBox(width: 12),
+                              Flexible(
+                                child: FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: Text(
+                                    "Continue with Google",
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
+                            ],
+                          ),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 15),
+              const SizedBox(height: 15),
+            ],
             // Center(
             //   child: InkWell(
             //     onTap: (){
