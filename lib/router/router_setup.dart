@@ -11,9 +11,8 @@ import 'package:jiwa_bakti/pages/signup_page.dart';
 import 'package:jiwa_bakti/pages/support_and_legal_page.dart';
 import 'package:jiwa_bakti/pages/terkini_page.dart';
 import 'package:jiwa_bakti/pages/text_size_page.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import '../pages/category_detail_page.dart';
-import 'package:jiwa_bakti/models/google.dart';
+import 'package:jiwa_bakti/models/social_signup_data.dart';
 
 final GoRouter router = GoRouter(
   routes: [
@@ -40,7 +39,7 @@ final GoRouter router = GoRouter(
 
         return SignupPage(
           option: option,
-          googleData: state.extra as GoogleSignupData?,
+          socialData: state.extra as SocialSignupData?,
         );
       },
     ),

@@ -17,18 +17,17 @@ import 'package:jiwa_bakti/utils/validation_helpers.dart';
 import 'package:theme_provider/theme_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:sizer/sizer.dart';
-import 'package:jiwa_bakti/models/google.dart';
+import 'package:jiwa_bakti/models/social_signup_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firebase_auth/firebase_auth.dart' as fb;
 
 class SignupMain extends StatefulWidget {
   final String option;
-  final GoogleSignupData? googleData;
+  final SocialSignupData? socialData;
 
   const SignupMain({
     super.key,
     required this.option,
-    this.googleData,
+    this.socialData,
   });
 
   @override
@@ -93,22 +92,26 @@ class SignupMainState extends State<SignupMain> {
 Future<void> _signInAfterSignup(ApiService apiService, User user) async {
   try {
     Map<String, dynamic> signInData;
+    final bool isSocialSignup =
+        (option == "google" || option == "apple") && widget.socialData != null;
 
-    if (option == "google" && widget.googleData != null) {
-      // For Google users, sign in with email and firebase_uid as password
+    if (isSocialSignup) {
+      // For social providers, sign in with email and firebase_uid as password
       signInData = {
-        "username": widget.googleData!.email,
-        "password": widget.googleData!.uid,
+        "username": widget.socialData!.email,
+        "password": widget.socialData!.uid,
       };
-      
-      debugPrint("---------- GOOGLE SIGN-IN DATA (as email/password): $signInData");
+
+      debugPrint(
+        "---------- ${widget.socialData!.provider.toUpperCase()} SIGN-IN DATA (as email/password): $signInData",
+      );
     } else {
       // Email sign-in
       signInData = {
         "username": _emailTextEditingController.text,
         "password": _passwordTextEditingController.text,
       };
-      
+
       debugPrint("---------- EMAIL SIGN-IN DATA: $signInData");
     }
 
@@ -127,12 +130,12 @@ Future<void> _signInAfterSignup(ApiService apiService, User user) async {
       }
 
       // Remember login
-      if (option == "google" && widget.googleData != null) {
-        user.rememberLogin(widget.googleData!.email, widget.googleData!.uid);
+      if (isSocialSignup) {
+        user.rememberLogin(widget.socialData!.email, widget.socialData!.uid);
       } else {
         user.rememberLogin(
           _emailTextEditingController.text,
-          _passwordTextEditingController.text
+          _passwordTextEditingController.text,
         );
       }
 
@@ -140,9 +143,9 @@ Future<void> _signInAfterSignup(ApiService apiService, User user) async {
       if (response['details'] != null && response['details'].isNotEmpty) {
         await user.login(
           response['details'][0], 
-          option == "google" 
-            ? widget.googleData!.email 
-            : _emailTextEditingController.text
+          isSocialSignup
+              ? widget.socialData!.email
+              : _emailTextEditingController.text
         );
         debugPrint("---------- USER LOGGED IN");
       }
@@ -183,56 +186,54 @@ Future<void> _signInAfterSignup(ApiService apiService, User user) async {
   }
 }
   void checkButtonAllowed() {
-  if (option == "google") {
-    // Google SIGNUP — email field is readonly, no password needed
-    if (firstNameValidated &&
+    final bool isSocialSignup =
+        (option == "google" || option == "apple") && widget.socialData != null;
+
+    if (isSocialSignup) {
+      // Social SIGNUP — email field is readonly, no password needed
+      if (firstNameValidated && lastNameValidated && ageValidated && isChecked) {
+        buttonAllowed = true;
+        return;
+      } else {
+        // Build social-specific error message
+        errorMessage = "";
+        if (!firstNameValidated || !lastNameValidated) {
+          errorMessage += "- Please fill in a valid name\n";
+        }
+        if (!ageValidated) {
+          errorMessage += "- Please fill in a valid age\n";
+        }
+        if (!isChecked) {
+          errorMessage += "- Please check the T&C box";
+        }
+        buttonAllowed = false;
+        return;
+      }
+    }
+
+    // NORMAL EMAIL SIGNUP
+    if (emailValidated &&
+        passwordValidated &&
+        confirmPasswordValidated &&
+        firstNameValidated &&
         lastNameValidated &&
         ageValidated &&
         isChecked) {
       buttonAllowed = true;
-      return;
     } else {
-      // Build Google-specific error message
       errorMessage = "";
+      if (!emailValidated) errorMessage += "- Please fill in a valid email\n";
+      if (!passwordValidated || !confirmPasswordValidated) {
+        errorMessage += "- Please fill in a valid password\n";
+      }
       if (!firstNameValidated || !lastNameValidated) {
         errorMessage += "- Please fill in a valid name\n";
       }
-      if (!ageValidated) {
-        errorMessage += "- Please fill in a valid age\n";
-      }
-      if (!isChecked) {
-        errorMessage += "- Please check the T&C box";
-      }
+      if (!ageValidated) errorMessage += "- Please fill in a valid age\n";
+      if (!isChecked) errorMessage += "- Please agree to the T&C";
       buttonAllowed = false;
-      return;
     }
   }
-
-  // NORMAL EMAIL SIGNUP
-  if (emailValidated &&
-      passwordValidated &&
-      confirmPasswordValidated &&
-      firstNameValidated &&
-      lastNameValidated &&
-      ageValidated &&
-      isChecked) {
-    buttonAllowed = true;
-  } else {
-    errorMessage = "";
-    if (!emailValidated) errorMessage += "- Please fill in a valid email\n";
-    if (!passwordValidated || !confirmPasswordValidated) {
-      errorMessage += "- Please fill in a valid password\n";
-    }
-    if (!firstNameValidated || !lastNameValidated) {
-      errorMessage += "- Please fill in a valid name\n";
-    }
-    if (!ageValidated) errorMessage += "- Please fill in a valid age\n";
-    if (!isChecked) errorMessage += "- Please agree to the T&C";
-    buttonAllowed = false;
-  }
-
-  
-}
 
 
   Future<void> _launchUrl(String stringUrl) async {
@@ -397,16 +398,19 @@ void initState() {
   initializeFocusNode();
   option = widget.option.toLowerCase();
 
-  if (option == "google" && widget.googleData != null) {
-    isEmail = false; // Google email cannot be edited
-    _emailTextEditingController.text = widget.googleData!.email;
+  final bool isSocialSignup =
+      (option == "google" || option == "apple") && widget.socialData != null;
+
+  if (isSocialSignup) {
+    isEmail = false; // Social emails cannot be edited
+    _emailTextEditingController.text = widget.socialData!.email;
 
     // Try to split display name into first/last
-    final parts = (widget.googleData!.name ?? "").split(" ");
+    final parts = (widget.socialData!.name ?? "").split(" ");
     _firstNameTextEditingController.text = parts.isNotEmpty ? parts.first : "";
-    _lastNameTextEditingController.text = parts.length > 1 ? parts.sublist(1).join(" ") : "";
-  } 
-  else if (option == "email") {
+    _lastNameTextEditingController.text =
+        parts.length > 1 ? parts.sublist(1).join(" ") : "";
+  } else if (option == "email") {
     isEmail = true;
   }
 }
@@ -738,7 +742,7 @@ void initState() {
                         ),
                         const SizedBox(height: 20),
                       ] else ...[
-                        // GOOGLE SIGNUP — No password fields.
+                        // SOCIAL SIGNUP — No password fields.
                       ],
 
                       Row(
@@ -840,17 +844,21 @@ void initState() {
 
           Map<String, dynamic> data;
 
-          if (option == "google" && widget.googleData != null) {
+          final bool isSocialSignup =
+              (option == "google" || option == "apple") &&
+                  widget.socialData != null;
+
+          if (isSocialSignup) {
             data = {
-              "firebase_uid": widget.googleData!.uid,
-              "email": widget.googleData!.email,
+              "firebase_uid": widget.socialData!.uid,
+              "email": widget.socialData!.email,
               "first_name": _firstNameTextEditingController.text,
               "last_name": _lastNameTextEditingController.text,
               "age": int.parse(_ageTextEditingController.text),
               "country": "Malaysia",
               "state": _currentSelectedState,
-              "provider": "google",
-              "password": widget.googleData!.uid
+              "provider": widget.socialData!.provider,
+              "password": widget.socialData!.uid
             };
           } else {
             data = {

@@ -66,7 +66,7 @@ class DefaultFirebaseOptions {
     storageBucket: 'webnyou-flow-link.firebasestorage.app',
     androidClientId: '825187216258-4aqr43ha3ahonnacad1oj3gq6fea5bo2.apps.googleusercontent.com',
     iosClientId: '825187216258-0hi0bm0j9jt2arp23b0fv3d5s0r425a9.apps.googleusercontent.com',
-    iosBundleId: 'com.example.jiwaBakti',
+    iosBundleId: 'com.jiwabakti.app',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -77,7 +77,7 @@ class DefaultFirebaseOptions {
     storageBucket: 'webnyou-flow-link.firebasestorage.app',
     androidClientId: '825187216258-4aqr43ha3ahonnacad1oj3gq6fea5bo2.apps.googleusercontent.com',
     iosClientId: '825187216258-0hi0bm0j9jt2arp23b0fv3d5s0r425a9.apps.googleusercontent.com',
-    iosBundleId: 'com.example.jiwaBakti',
+    iosBundleId: 'com.jiwabakti.app',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
