@@ -60,12 +60,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBF5Ja5kLhLOgm-M7g175XtHTbyBGzSh-s',
-    appId: '1:825187216258:ios:cbfc5d68b93f31e87e3d9b',
+    appId: '1:825187216258:ios:7e294800b26cc0657e3d9b',
     messagingSenderId: '825187216258',
     projectId: 'webnyou-flow-link',
     storageBucket: 'webnyou-flow-link.firebasestorage.app',
     androidClientId: '825187216258-4aqr43ha3ahonnacad1oj3gq6fea5bo2.apps.googleusercontent.com',
-    iosClientId: '825187216258-0hi0bm0j9jt2arp23b0fv3d5s0r425a9.apps.googleusercontent.com',
+    iosClientId: '825187216258-q0dspbtjb7h2oqhriegucq89pf9bgq4e.apps.googleusercontent.com',
     iosBundleId: 'com.jiwabakti.app',
   );
 
