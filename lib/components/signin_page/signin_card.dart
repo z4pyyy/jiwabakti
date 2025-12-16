@@ -252,6 +252,18 @@ class SigninCardState extends State<SigninCard> {
   Future<void> _signInWithApple() async {
     if (_isLoading) return;
 
+    final isAppleDevice = defaultTargetPlatform == TargetPlatform.iOS ||
+        defaultTargetPlatform == TargetPlatform.macOS;
+
+    if (!kIsWeb && !isAppleDevice) {
+      showFToast(
+        context: context,
+        status: Status.error,
+        message: "Apple sign-in is only available on Apple devices.",
+      );
+      return;
+    }
+
     setState(() => _isLoading = true);
 
     try {
@@ -289,6 +301,11 @@ class SigninCardState extends State<SigninCard> {
         final rawNonce = _generateNonce();
         final nonce = _sha256OfString(rawNonce);
 
+        final appleIsAvailable = await SignInWithApple.isAvailable();
+        if (!appleIsAvailable) {
+          throw Exception("Apple Sign-In is not available on this device.");
+        }
+
         final appleCredential = await SignInWithApple.getAppleIDCredential(
           scopes: const [
             AppleIDAuthorizationScopes.email,
@@ -296,6 +313,11 @@ class SigninCardState extends State<SigninCard> {
           ],
           nonce: nonce,
         );
+
+        final identityToken = appleCredential.identityToken;
+        if (identityToken == null || identityToken.isEmpty) {
+          throw Exception("Apple did not return a valid identity token.");
+        }
 
         appleEmail = appleCredential.email;
         final appleNames = [
@@ -308,7 +330,7 @@ class SigninCardState extends State<SigninCard> {
         }
 
         final oauthCredential = fb.OAuthProvider("apple.com").credential(
-          idToken: appleCredential.identityToken,
+          idToken: identityToken,
           rawNonce: rawNonce,
         );
 
@@ -346,6 +368,27 @@ class SigninCardState extends State<SigninCard> {
           context: context,
           status: Status.error,
           message: "Apple sign-in failed. Please try again.",
+        );
+      }
+    } on fb.FirebaseAuthException catch (e, stackTrace) {
+      debugPrint("---------- FIREBASE AUTH ERROR CODE: ${e.code}");
+      debugPrint("---------- FIREBASE AUTH MESSAGE: ${e.message}");
+      debugPrint("---------- FIREBASE AUTH EMAIL: ${e.email}");
+      debugPrint("---------- FIREBASE AUTH PHONE: ${e.phoneNumber}");
+
+      final credential = e.credential;
+      if (credential != null) {
+        debugPrint(
+            "---------- FIREBASE AUTH CREDENTIAL PROVIDER: ${credential.providerId}");
+      }
+
+      debugPrint("---------- FIREBASE AUTH STACK TRACE: $stackTrace");
+
+      if (mounted) {
+        showFToast(
+          context: context,
+          status: Status.error,
+          message: "Apple sign-in failed due to a FirebaseAuth error.",
         );
       }
     } catch (e, stackTrace) {
