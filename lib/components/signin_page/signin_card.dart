@@ -318,6 +318,14 @@ class SigninCardState extends State<SigninCard> {
         if (identityToken == null || identityToken.isEmpty) {
           throw Exception("Apple did not return a valid identity token.");
         }
+        final authorizationCode = appleCredential.authorizationCode;
+
+        debugPrint(
+          "---------- APPLE CREDENTIALS: "
+          "idTokenLen=${identityToken.length}, "
+          "authCodeLen=${authorizationCode.length}, "
+          "rawNonceLen=${rawNonce.length}",
+        );
 
         appleEmail = appleCredential.email;
         final appleNames = [
@@ -331,6 +339,7 @@ class SigninCardState extends State<SigninCard> {
 
         final oauthCredential = fb.OAuthProvider("apple.com").credential(
           idToken: identityToken,
+          accessToken: authorizationCode,
           rawNonce: rawNonce,
         );
 
