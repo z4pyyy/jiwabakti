@@ -94,10 +94,14 @@ exports.openShort = onRequest(async (req, res) => {
     const snap = await db.collection("flowlinks").doc(code).get();
     if (!snap.exists) return res.status(404).send("Link not found");
     const data = snap.data() || {};
+    const landingParams = new URLSearchParams({ code });
+    if (data.type != null) landingParams.set("type", String(data.type));
+    const landingUrl = `/get-the-app?${landingParams.toString()}`;
 
     const ua = (req.get("user-agent") || "");
 const isAndroid = /Android/i.test(ua);
 const isWindows = /Windows/i.test(ua);
+const isIOS = /iPhone|iPad|iPod/i.test(ua);
 
 if (isWindows) {
   // Windows → help page
@@ -109,6 +113,10 @@ if (isAndroid) {
   return res.redirect(302, `/get-the-app?code=${encodeURIComponent(code)}`);
 }
 
+if (isIOS) {
+  // iOS - use the same landing page to open the custom scheme
+  return res.redirect(302, landingUrl);
+}
 // Others → resolved web URL (or help page)
 return res.redirect(302, data.link || FALLBACK_URL);}catch (e) {
     logger.error(e);

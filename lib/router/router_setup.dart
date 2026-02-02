@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:jiwa_bakti/pages/archive_detail_page.dart';
 import 'package:jiwa_bakti/pages/archive_page.dart';
 import 'package:jiwa_bakti/pages/category_page.dart';
+import 'package:jiwa_bakti/pages/edit_profile_page.dart';
 import 'package:jiwa_bakti/pages/profile_page.dart';
 import 'package:jiwa_bakti/pages/saved_news_page.dart';
 import 'package:jiwa_bakti/pages/search_page.dart';
@@ -23,6 +24,10 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(path: '/archive', builder: (context, state) => const ArchivePage()),
     GoRoute(path: '/profile', builder: (context, state) => const ProfilePage()),
+    GoRoute(
+      path: '/edit-profile',
+      builder: (context, state) => const EditProfilePage(),
+    ),
     GoRoute(
       path: '/support-and-legal',
       builder: (context, state) => const SupportAndLegalPage(),

@@ -420,6 +420,10 @@ void initState() {
   Widget build(BuildContext context) {
     final themeOptions = ThemeProvider.optionsOf<ThemeOptions>(context);
     final user = GetIt.I<User>();
+    final dropdownTextStyle = const TextStyle(
+      fontSize: 16,
+      color: Colors.black,
+    );
 
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -597,13 +601,15 @@ void initState() {
                                 child: DropdownButton<String>(
                                   value: _currentSelectedCountry,
                                   isDense: true,
+                                  style: dropdownTextStyle,
+                                  dropdownColor: Colors.white,
                                   onChanged: null,
                                   items: ["Malaysia"].map((String value) {
                                     return DropdownMenuItem<String>(
                                       value: value,
                                       child: Text(
                                         value,
-                                        style: TextStyle(fontSize: 12.sp), // set your desired font size here
+                                        style: dropdownTextStyle,
                                       ),
                                     );
                                   }).toList(),
@@ -644,6 +650,8 @@ void initState() {
                                 child: DropdownButton<String>(
                                   value: _currentSelectedState,
                                   isDense: true,
+                                  style: dropdownTextStyle,
+                                  dropdownColor: Colors.white,
                                   onChanged: (String? value) {
                                     setState(() {
                                       if(value != null) {
@@ -657,7 +665,7 @@ void initState() {
                                       value: value,
                                       child: Text(
                                         value,
-                                        style: TextStyle(fontSize: 12.sp), // set your desired font size here
+                                        style: dropdownTextStyle,
                                       ),
                                     );
                                   }).toList(),
@@ -783,7 +791,7 @@ void initState() {
                                       decoration: TextDecoration.underline,
                                     ),
                                     recognizer: TapGestureRecognizer()..onTap = () async{
-                                      await _launchUrl("https://utusansarawak.com.my/terms-and-conditions/");
+                                      await _launchUrl("https://jiwabakti.com.my/terma-syarat/");
                                     },
                                   ),
                                   const TextSpan(
@@ -801,7 +809,7 @@ void initState() {
                                       decoration: TextDecoration.underline,
                                     ),
                                     recognizer: TapGestureRecognizer()..onTap = () async {
-                                      await _launchUrl("https://utusansarawak.com.my/disclaimer/");
+                                      await _launchUrl("https://jiwabakti.com.my/penafian/");
                                     },
                                   ),
                                 ],

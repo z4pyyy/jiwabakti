@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/foundation.dart';
 
-class User{
+class User extends ChangeNotifier{
   int? id;
   int? userId;
   String? lastName;
@@ -13,7 +13,7 @@ class User{
   String? state;
   // String? token;
   bool isLogin = false;
-  double textSizeScale;
+  double _textSizeScale;
 
   User({
     this.id,
@@ -25,8 +25,18 @@ class User{
     this.password,
     this.state,
     // this.token,
-    required this.textSizeScale,
-  });
+    required double textSizeScale,
+  }) : _textSizeScale = textSizeScale;
+
+  double get textSizeScale => _textSizeScale;
+
+  set textSizeScale(double value) {
+    if (_textSizeScale == value) {
+      return;
+    }
+    _textSizeScale = value;
+    notifyListeners();
+  }
 
   Future<void> login(Map<String, dynamic> userDetails, String userEmail) async {
     try {

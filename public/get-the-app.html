@@ -23,15 +23,18 @@
     <div class="row">
       <a id="openApp" class="btn primary" href="#">Open in App</a>
       <a id="openPlay" class="btn secondary" href="#">Open in Google Play</a>
+      <a id="openAppStore" class="btn secondary" href="#">Open in App Store</a>
     </div>
 
-    <p style="margin-top:16px;color:#777">Already installed? Tap “Open in App”.</p>
+    <p id="fallbackHint" style="margin-top:12px;color:#777;display:none">If the app did not open, use the store button above.</p>
+    <p style="margin-top:16px;color:#777">Already installed? Tap Open in App.</p>
   </div>
 
   <script>
 (function () {
   const ANDROID_PKG = 'com.example.jiwa_bakti';
   const PLAY_URL = `https://play.google.com/store/apps/details?id=${ANDROID_PKG}`;
+  const APP_STORE_URL = 'https://apps.apple.com/my/app/jiwa-bakti/id6756609497';
 
   const params = new URLSearchParams(location.search);
   const code = params.get('code') || '';
@@ -39,12 +42,32 @@
   // Button links
   const openApp = document.getElementById('openApp');
   const openPlay = document.getElementById('openPlay');
+  const openAppStore = document.getElementById('openAppStore');
+  const fallbackHint = document.getElementById('fallbackHint');
 
-  // 👉 Use direct custom-scheme (no intent://, no fallback param)
   openApp.href = code ? `jiwabakti://news/${encodeURIComponent(code)}` : 'jiwabakti://news';
 
   // Play fallback only when user taps
   openPlay.href = PLAY_URL;
+  openAppStore.href = APP_STORE_URL;
+  
+  const ua = navigator.userAgent || '';
+  const isAndroid = /Android/i.test(ua);
+  const isIOS = /iPhone|iPad|iPod/i.test(ua);
+
+  if (isIOS) {
+    openPlay.style.display = 'none';
+  } else if (isAndroid) {
+    openAppStore.style.display = 'none';
+  }
+
+  openApp.addEventListener('click', () => {
+    window.setTimeout(() => {
+      if (document.visibilityState === 'visible') {
+        fallbackHint.style.display = 'block';
+      }
+    }, 1200);
+  });
 
   // Optional: you can try to open the app once *without* any fallback,
   // but do NOT redirect to Play automatically.

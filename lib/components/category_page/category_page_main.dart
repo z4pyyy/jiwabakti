@@ -57,7 +57,7 @@ class CategoryPageMainState extends State<CategoryPageMain>{
                     decoration: InputDecoration(
                       isDense: true,
                       contentPadding: EdgeInsets.zero,
-                      hintText: 'Search',
+                      hintText: 'Cari',
                       border: InputBorder.none,
                       filled: true,
                       fillColor: Colors.grey[200],

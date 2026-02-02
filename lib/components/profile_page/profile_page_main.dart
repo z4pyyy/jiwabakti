@@ -30,6 +30,24 @@ class ProfilePageMainState extends State<ProfilePageMain> {
   Widget build(BuildContext context) {
     final user = GetIt.I<User>();
     final themeOptions = ThemeProvider.optionsOf<ThemeOptions>(context);
+    final sectionTitleStyle = TextStyle(
+      fontSize: user.textSizeScale * themeOptions.textTitleSize2,
+      fontWeight: FontWeight.w600,
+      color: themeOptions.textColor,
+    );
+    final sectionLabelStyle = TextStyle(
+      fontSize: user.textSizeScale * themeOptions.textSize2,
+      fontWeight: FontWeight.w600,
+      color: themeOptions.secondaryColor,
+    );
+    final menuTextStyle = TextStyle(
+      fontSize: user.textSizeScale * themeOptions.textSize1,
+      color: themeOptions.textColor,
+    );
+    final fixedSectionLabelStyle =
+        sectionLabelStyle.copyWith(fontSize: themeOptions.textSize2);
+    
+    final sectionHeaderStyle = sectionLabelStyle;
 
     return SingleChildScrollView(
       child: ConstrainedBox(
@@ -99,10 +117,9 @@ class ProfilePageMainState extends State<ProfilePageMain> {
                 child: BlockContainer(
                   child: Text(
                     user.isLogin ? "Daftar Keluar" : "Daftar Masuk",
-                    style: const TextStyle(
-                        fontSize: 18,
-                        color: Color(0xFFD24C00),
-                        fontWeight: FontWeight.w500
+                    style: sectionTitleStyle.copyWith(
+                      color: const Color(0xFFD24C00),
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
@@ -118,23 +135,16 @@ class ProfilePageMainState extends State<ProfilePageMain> {
                         children: [
                           Text(
                             "User Profile",
-                            style: TextStyle(
-                              fontSize: user.textSizeScale * themeOptions.textSize5,
-                              fontWeight: FontWeight.w500,
-                              color: themeOptions.iconColor,
-                              fontFamily: "Serif",
-                              letterSpacing: 1.1,
-                              wordSpacing: 3,
-                            ),
+                            style: sectionLabelStyle,
                           ),
                           InkWell(
                             onTap: (){
-                              // context.push("/edit-profile");
+                              context.push("/edit-profile");
                             },
                             child: Text(
                               "Edit",
                               style: TextStyle(
-                                fontSize: user.textSizeScale * themeOptions.textSize3,
+                                fontSize: user.textSizeScale * themeOptions.textSize1,
                                 fontWeight: FontWeight.w500,
                                 color: themeOptions.primaryColor,
                               ),
@@ -143,19 +153,31 @@ class ProfilePageMainState extends State<ProfilePageMain> {
                         ],
                       ),
                       const SizedBox(height: 20),
-                      AccountDetailRow(label: "Name", value: "${user.firstName} ${user.lastName}"),
+                      AccountDetailRow(
+                        label: "Name",
+                        value: "${user.firstName} ${user.lastName}",
+                      ),
                       const SizedBox(height: 5),
                       const CustomDivider(),
                       const SizedBox(height: 5),
-                      AccountDetailRow(label: "Umur", value: "${user.age}"),
+                      AccountDetailRow(
+                        label: "Umur",
+                        value: "${user.age}",
+                      ),
                       const SizedBox(height: 5),
                       const CustomDivider(),
                       const SizedBox(height: 5),
-                      AccountDetailRow(label: "Negara", value: "${user.state}, ${user.country}"),
+                      AccountDetailRow(
+                        label: "Negara",
+                        value: "${user.state}, ${user.country}",
+                      ),
                       const SizedBox(height: 5),
                       const CustomDivider(),
                       const SizedBox(height: 5),
-                      AccountDetailRow(label: "E-mel", value: user.email!),
+                      AccountDetailRow(
+                        label: "E-mel",
+                        value: user.email!,
+                      ),
                       const SizedBox(height: 10),
                     ],
                   ),
@@ -167,23 +189,16 @@ class ProfilePageMainState extends State<ProfilePageMain> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         "Aturan Aplikasi",
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.grey,
-                          fontFamily: "Serif",
-                          letterSpacing: 1.1,
-                          wordSpacing: 3,
-                        ),
+                        style: sectionLabelStyle,
                       ),
                       const SizedBox(height: 20),
                       InkWell(
                         onTap: (){
                           context.push("/text-size");
                         },
-                        child: const Row(
+                        child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -196,10 +211,7 @@ class ProfilePageMainState extends State<ProfilePageMain> {
                                 SizedBox(width: 12,),
                                 Text(
                                   "Saiz Teks",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                  ),
+                                  style: menuTextStyle,
                                 ),
                               ],
                             ),
@@ -216,7 +228,7 @@ class ProfilePageMainState extends State<ProfilePageMain> {
                   onTap: (){
                     context.push("/support-and-legal");
                   },
-                  child: const Row(
+                  child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -229,10 +241,7 @@ class ProfilePageMainState extends State<ProfilePageMain> {
                           SizedBox(width: 12,),
                           Text(
                             "Sokongan Aplikasi",
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
+                            style: menuTextStyle,
                           ),
                         ],
                       ),
@@ -246,7 +255,7 @@ class ProfilePageMainState extends State<ProfilePageMain> {
                   onTap: (){
                     final Uri url = Uri(
                       scheme: "mailto",
-                      path: 'apps@utusansarawak.com.my',
+                      path: 'jiwabakti.my@gmail.com',
                       queryParameters: {
                         "subject" : "",
                         "body" : ""
@@ -254,7 +263,7 @@ class ProfilePageMainState extends State<ProfilePageMain> {
                     );
                     _launchUrl(url);
                   },
-                  child: const Row(
+                  child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -266,11 +275,8 @@ class ProfilePageMainState extends State<ProfilePageMain> {
                           ),
                           SizedBox(width: 12,),
                           Text(
-                            "Feedback",
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
+                            "Maklum Balas",
+                            style: menuTextStyle,
                           ),
                         ],
                       ),
@@ -284,7 +290,7 @@ class ProfilePageMainState extends State<ProfilePageMain> {
                   onTap: (){
                     context.push("/saved-news");
                   },
-                  child: const Row(
+                  child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -296,11 +302,8 @@ class ProfilePageMainState extends State<ProfilePageMain> {
                           ),
                           SizedBox(width: 12,),
                           Text(
-                            "Saved News",
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
+                            "Berita Tersimpan",
+                            style: menuTextStyle,
                           ),
                         ],
                       ),

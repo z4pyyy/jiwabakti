@@ -42,66 +42,64 @@ class NewsDetail extends StatefulWidget {
 
 class NewsDetailState extends State<NewsDetail>{
 
-  void showPleaseLoginDialog(BuildContext context, ThemeOptions themeOptions){
-    showCupertinoModalPopup(
-      context: context,
-      builder: (context) => CupertinoActionSheet(
-        title: Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: themeOptions.primaryColor,
-          ),
-          child: const Center(
-            child: Icon(FontAwesomeIcons.exclamation, size: 24, color: Colors.white,),
-          ),
+  void showPleaseLoginDialog(
+  BuildContext context,
+  ThemeOptions themeOptions,
+  User user,
+) {
+  const double dialogScale = 2.0;
+
+  double s(double base) => base * dialogScale * user.textSizeScale;
+
+  showCupertinoModalPopup(
+    context: context,
+    builder: (context) => CupertinoActionSheet(
+      title: Container(
+        width: 64,
+        height: 64,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: themeOptions.primaryColor,
         ),
-        message: Text(
-          'To continue using the save news feature, please sign in or register for a Jiwa Bakti account',
-          style: TextStyle(
-            fontSize: themeOptions.textSize3,
-          ),
-        ),
-        actions: [
-          CupertinoActionSheetAction(
-            onPressed: () {
-              context.push("/signup-option");
-            },
-            child: Text(
-              'Register for a Jiwa Bakti account',
-              style: TextStyle(
-                fontSize: themeOptions.textSize2,
-              ),
-            ),
-          ),
-          CupertinoActionSheetAction(
-            onPressed: () {
-              context.push("/signin");
-            },
-            child: Text(
-              'Sign In',
-              style: TextStyle(
-                fontSize: themeOptions.textSize2,
-              ),
-            ),
-          ),
-        ],
-        cancelButton: CupertinoActionSheetAction(
-          onPressed: () {
-            context.pop();
-          },
-          isDefaultAction: true,
-          child: Text(
-            'Cancel',
-            style: TextStyle(
-              fontSize: themeOptions.textSize2,
-            ),
-          ),
+        child: const Center(
+          child: Icon(FontAwesomeIcons.exclamation, size: 34, color: Colors.white),
         ),
       ),
-    );
-  }
+      message: Text(
+        'Untuk terus menggunakan berita tersimpan, sila daftar masuk atau daftar untuk akaun pengguna Jiwa Bakti',
+        style: TextStyle(
+          fontSize: s(themeOptions.textSize3),
+          height: 1.25,
+        ),
+        textAlign: TextAlign.center,
+      ),
+      actions: [
+        CupertinoActionSheetAction(
+          onPressed: () => context.push("/signup-option"),
+          child: Text(
+            'Daftar untuk akaun pengguna Jiwa Bakti',
+            style: TextStyle(fontSize: s(themeOptions.textSize2)),
+          ),
+        ),
+        CupertinoActionSheetAction(
+          onPressed: () => context.push("/signin"),
+          child: Text(
+            'Daftar Masuk',
+            style: TextStyle(fontSize: s(themeOptions.textSize2)),
+          ),
+        ),
+      ],
+      cancelButton: CupertinoActionSheetAction(
+        onPressed: () => context.pop(),
+        isDefaultAction: true,
+        child: Text(
+          'Batalkan',
+          style: TextStyle(fontSize: s(themeOptions.textSize2)),
+        ),
+      ),
+    ),
+  );
+}
 
   @override
   Widget build(BuildContext context){
@@ -110,6 +108,20 @@ class NewsDetailState extends State<NewsDetail>{
     final themeOptions = ThemeProvider.optionsOf<ThemeOptions>(context);
     final user = GetIt.I<User>();
     bool _isSharing = false;
+    final titleTextStyle = TextStyle(
+      fontSize: user.textSizeScale * (themeOptions.textTitleSize1 + 2),
+      fontWeight: FontWeight.w600,
+      height: 1.3,
+    );
+    final bodyTextStyle = TextStyle(
+      color: themeOptions.textColor,
+      fontSize: user.textSizeScale * (themeOptions.textSize1 + 6),
+      height: 1.6,
+    );
+    final metaTextStyle = TextStyle(
+      fontSize: user.textSizeScale * (themeOptions.textSize1 + 1),
+      color: Colors.grey[600],
+    );
 
     return Container(
       margin: const EdgeInsets.only(top: 25),
@@ -209,7 +221,7 @@ class NewsDetailState extends State<NewsDetail>{
                         }
                       });
                     }else{
-                      showPleaseLoginDialog(context, themeOptions);
+                      showPleaseLoginDialog(context, themeOptions, user);
                     }
                   },
                   child: Container(
@@ -247,7 +259,7 @@ class NewsDetailState extends State<NewsDetail>{
                 children: [
                   Text(
                     widget.title,
-                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+                    style: titleTextStyle,
                   ),
                   const SizedBox(height: 15,),
                   Container(
@@ -260,7 +272,10 @@ class NewsDetailState extends State<NewsDetail>{
                         ),
                       ),
                     ),
-                    child: Text("By ${widget.author}", style: const TextStyle(fontSize: 16),),
+                    child: Text(
+                      "By ${widget.author}",
+                      style: bodyTextStyle.copyWith(fontWeight: FontWeight.w500),
+                    ),
                   ),
                   const SizedBox(height: 5,),
                   Row(
@@ -268,17 +283,17 @@ class NewsDetailState extends State<NewsDetail>{
                     children: [
                       Text(
                         widget.time,
-                        style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                        style: metaTextStyle,
                       ),
                       Container(
                         margin: const EdgeInsets.symmetric(horizontal: 6),
                         width: 1.5,
-                        height: 14,
+                        height: metaTextStyle.fontSize ?? 16,
                         color: Colors.grey[500],
                       ),
                       Text(
                         widget.hourAgo,
-                        style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                        style: metaTextStyle,
                       ),
                     ],
                   ),
@@ -304,16 +319,18 @@ class NewsDetailState extends State<NewsDetail>{
                                   text: "${widget.content[listIndex]["location"]!}: ",
                                   style: TextStyle(
                                     color: themeOptions.textColor,
-                                    fontSize: user.textSizeScale * themeOptions.textSize2,
-                                    fontWeight: FontWeight.w500,
+                                    fontSize: bodyTextStyle.fontSize,
+                                    fontWeight: FontWeight.w600,
+                                    height: bodyTextStyle.height,
                                   ),
                                   children: <TextSpan>[
                                     TextSpan(
                                       text: widget.content[listIndex]["paragraph"]!,
                                       style: TextStyle(
                                         color: themeOptions.textColor,
-                                        fontSize: user.textSizeScale * themeOptions.textSize2,
+                                        fontSize: bodyTextStyle.fontSize,
                                         fontWeight: FontWeight.normal,
+                                        height: bodyTextStyle.height,
                                       ),
                                     ),
                                   ],
@@ -322,20 +339,14 @@ class NewsDetailState extends State<NewsDetail>{
                             ]else if(widget.content[listIndex].containsKey("paragraph"))...[
                               HtmlWidget(
                                 htmlOne,
-                                textStyle: TextStyle(
-                                  color: themeOptions.textColor,
-                                  fontSize: user.textSizeScale * themeOptions.textSize2,
-                                ),
+                                textStyle: bodyTextStyle,
                               ),
 
                               const AdsCard(marginTop: 40),
 
                               HtmlWidget(
                                 htmlTwo,
-                                textStyle: TextStyle(
-                                  color: themeOptions.textColor,
-                                  fontSize: user.textSizeScale * themeOptions.textSize2,
-                                ),
+                                textStyle: bodyTextStyle,
                               ),
 
                             ],

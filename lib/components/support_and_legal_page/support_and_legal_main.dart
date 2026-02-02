@@ -39,7 +39,7 @@ class SupportAndLegalMainState extends State<SupportAndLegalMain> {
                   children: [
                     InkWell(
                       onTap: () async{
-                        final Uri url = Uri.parse("https://utusansarawak.com.my/terms-and-conditions/");
+                        final Uri url = Uri.parse("https://jiwabakti.com.my/terma-syarat/");
                         await _launchUrl(url);
                       },
                       child: const Row(
@@ -62,7 +62,7 @@ class SupportAndLegalMainState extends State<SupportAndLegalMain> {
                     const SizedBox(height: 5),
                     InkWell(
                       onTap: () async{
-                        final Uri url = Uri.parse("https://utusansarawak.com.my/disclaimer/");
+                        final Uri url = Uri.parse("https://jiwabakti.com.my/penafian/");
                         await _launchUrl(url);
                       },
                       child: const Row(
@@ -87,7 +87,7 @@ class SupportAndLegalMainState extends State<SupportAndLegalMain> {
                       onTap: () async{
                         final Uri url = Uri(
                           scheme: "mailto",
-                          path: 'apps@utusansarawak.com.my',
+                          path: 'jiwabakti.my@gmail.com',
                           queryParameters: {
                             "subject" : "",
                             "body" : ""

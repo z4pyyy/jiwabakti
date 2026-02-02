@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:jiwa_bakti/models/user.dart';
+import 'package:jiwa_bakti/themes/theme_options.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class TextSizeMain extends StatefulWidget {
   const TextSizeMain({Key? key}) : super(key: key);
@@ -14,6 +17,9 @@ class TextSizeMainState extends State<TextSizeMain> {
 
   @override
   Widget build(BuildContext context) {
+    final themeOptions = ThemeProvider.optionsOf<ThemeOptions>(context);
+    final user = GetIt.I<User>();
+    _currentSliderValue = user.textSizeScale;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -28,7 +34,7 @@ class TextSizeMainState extends State<TextSizeMain> {
                 child: Text(
                   "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
                   style: TextStyle(
-                    fontSize: 20 * _currentSliderValue,
+                    fontSize: user.textSizeScale * themeOptions.textTitleSize1,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -39,7 +45,7 @@ class TextSizeMainState extends State<TextSizeMain> {
                 child: Text(
                   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                   style: TextStyle(
-                      fontSize: 16 * _currentSliderValue,
+                      fontSize: user.textSizeScale * themeOptions.textSize2,
                   ),
                 ),
               ),
@@ -55,12 +61,13 @@ class TextSizeMainState extends State<TextSizeMain> {
                 min: 0.8,
                 max: 1.6,
                 divisions: 8,
-                activeColor: Color(0xFFD24C00),
-                inactiveColor: Color(0xFFD24C00).withOpacity(0.3),
-                thumbColor: Colors.white,
+                activeColor: themeOptions.primaryColor,
+                inactiveColor: themeOptions.primaryColorLight,
+                thumbColor: themeOptions.backgroundColor,
                 onChanged: (double value) {
                   setState(() {
                     _currentSliderValue = value;
+                    user.textSizeScale = value;
                   });
                 },
               ),
@@ -70,9 +77,17 @@ class TextSizeMainState extends State<TextSizeMain> {
                     : (){
                         setState(() {
                         _currentSliderValue = 1.0;
+                        user.textSizeScale = 1.0;
                       });
                 },
-                child: Text("Tetap semula ke tetapan asal", style: TextStyle(color: _currentSliderValue == 1.0 ? Colors.grey : Color(0xFFD24C00)),),
+                child: Text(
+                  "Tetap semula ke tetapan asal",
+                  style: TextStyle(
+                    color: _currentSliderValue == 1.0
+                        ? themeOptions.secondaryColor
+                        : themeOptions.primaryColor,
+                  ),
+                ),
               ),
               const SizedBox(height: 20),
             ],
