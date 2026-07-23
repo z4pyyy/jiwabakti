@@ -180,7 +180,7 @@ class SavedNewsPageMainState extends State<SavedNewsPageMain>{
               color: themeOptions.primaryColor,
             ),
             child: const Center(
-              child: Icon(FontAwesomeIcons.exclamation, size: 30, color: Colors.white,),
+              child: FaIcon(FontAwesomeIcons.exclamation, size: 30, color: Colors.white,),
             ),
           ),
 

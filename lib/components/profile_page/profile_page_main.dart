@@ -236,7 +236,7 @@ class ProfilePageMainState extends State<ProfilePageMain> {
                         children: [
                           SizedBox(
                             width: 30,
-                            child: Icon(FontAwesomeIcons.question, size: 24,),
+                            child: FaIcon(FontAwesomeIcons.question, size: 24,),
                           ),
                           SizedBox(width: 12,),
                           Text(
@@ -298,7 +298,7 @@ class ProfilePageMainState extends State<ProfilePageMain> {
                         children: [
                           SizedBox(
                             width: 30,
-                            child: Icon(FontAwesomeIcons.bookmark, size: 20,),
+                            child: FaIcon(FontAwesomeIcons.bookmark, size: 20,),
                           ),
                           SizedBox(width: 12,),
                           Text(

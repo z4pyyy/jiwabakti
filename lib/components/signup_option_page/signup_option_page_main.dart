@@ -61,7 +61,7 @@ class SignupOptionPageMainState extends State<SignupOptionPageMain> {
                       Container(
                         margin: EdgeInsets.only(left: 10.w),
                         width: 30,
-                        child: const Icon(FontAwesomeIcons.apple, size: 26),
+                        child: const FaIcon(FontAwesomeIcons.apple, size: 26),
                       ),
                       const SizedBox(width: 10),
                       const Text(
@@ -102,7 +102,7 @@ class SignupOptionPageMainState extends State<SignupOptionPageMain> {
                       Container(
                         margin: EdgeInsets.only(left: 10.w),
                         width: 30,
-                        child: const Icon(FontAwesomeIcons.google, size: 20),
+                        child: const FaIcon(FontAwesomeIcons.google, size: 20),
                       ),
                       const SizedBox(width: 10),
                       const Text(

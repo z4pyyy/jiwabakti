@@ -69,7 +69,7 @@ Future<void> _launchUrl(String link) async {
             children: [
               TextButton.icon(
                 onPressed: () => _launchUrl("https://www.instagram.com/jiwabakti?igsh=eXFkMTA5a2IxYzY3&utm_source=qr"),
-                icon: const Icon(FontAwesomeIcons.instagram, color: Color(0xFFD24C00),),
+                icon: const FaIcon(FontAwesomeIcons.instagram, color: Color(0xFFD24C00),),
                 label: const Text("Instagram", style: TextStyle(color: Color(0xFFD24C00), fontSize: 14),),
                 style: TextButton.styleFrom(
                   side: const BorderSide(color: Color(0xFFD24C00), width: 1.5),
@@ -81,7 +81,7 @@ Future<void> _launchUrl(String link) async {
               ),
               TextButton.icon(
                 onPressed: () => _launchUrl("https://www.facebook.com/share/19rWn7ih73/?mibextid=wwXIfr"),
-                icon: const Icon(FontAwesomeIcons.facebookF, color: Color(0xFFD24C00),),
+                icon: const FaIcon(FontAwesomeIcons.facebookF, color: Color(0xFFD24C00),),
                 label: const Text("Facebook", style: TextStyle(color: Color(0xFFD24C00), fontSize: 14),),
                 style: TextButton.styleFrom(
                   side: const BorderSide(color: Color(0xFFD24C00), width: 1.5),
@@ -93,7 +93,7 @@ Future<void> _launchUrl(String link) async {
               ),
               TextButton.icon(
                 onPressed: () => _launchUrl("https://x.com/jiwabaktiofcl?s=21&t=lGEBAUbe-ZL5EtLsP5OBew"),
-                icon: const Icon(FontAwesomeIcons.xTwitter, color: Color(0xFFD24C00),),
+                icon: const FaIcon(FontAwesomeIcons.xTwitter, color: Color(0xFFD24C00),),
                 label: const Text("X", style: TextStyle(color: Color(0xFFD24C00), fontSize: 14),),
                 style: TextButton.styleFrom(
                   side: const BorderSide(color: Color(0xFFD24C00), width: 1.5),
@@ -105,7 +105,7 @@ Future<void> _launchUrl(String link) async {
               ),
               TextButton.icon(
                 onPressed: () => _launchUrl("https://www.tiktok.com/@jiwabakti?_t=ZS-8xf0ZnVXe7k&_r=1"),
-                icon: const Icon(FontAwesomeIcons.tiktok, color: Color(0xFFD24C00),),
+                icon: const FaIcon(FontAwesomeIcons.tiktok, color: Color(0xFFD24C00),),
                 label: const Text("TikTok", style: TextStyle(color: Color(0xFFD24C00), fontSize: 14),),
                 style: TextButton.styleFrom(
                   side: const BorderSide(color: Color(0xFFD24C00), width: 1.5),

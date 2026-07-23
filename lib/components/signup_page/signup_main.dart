@@ -472,13 +472,11 @@ void initState() {
                             children: [
                               SizedBox(
                                 width: 30,
-                                child: Icon(
-                                  option == "apple"
-                                    ? FontAwesomeIcons.apple
-                                    : option == "email"
-                                      ? Icons.mail_outline_rounded
-                                      : FontAwesomeIcons.google,
-                                  size: option == "apple" ? 30 : 26,),
+                                child: option == "apple"
+                                  ? FaIcon(FontAwesomeIcons.apple, size: 30)
+                                  : option == "email"
+                                    ? Icon(Icons.mail_outline_rounded, size: 26)
+                                    : FaIcon(FontAwesomeIcons.google, size: 26),
                               ),
                               const SizedBox(width: 10,),
                               Text(

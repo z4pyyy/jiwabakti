@@ -65,15 +65,15 @@ class BottomNavBarState extends State<BottomNavBar> {
                     label: "Terkini",
                     backgroundColor: Colors.white),
                 BottomNavigationBarItem(
-                    icon: Icon(FontAwesomeIcons.list, size: 24,),
+                    icon: FaIcon(FontAwesomeIcons.list, size: 24,),
                     label: "Kategori",
                     backgroundColor: Colors.white),
                 BottomNavigationBarItem(
-                    icon: Icon(FontAwesomeIcons.boxArchive, size: 24,),
+                    icon: FaIcon(FontAwesomeIcons.boxArchive, size: 24,),
                     label: "Arkib",
                     backgroundColor: Colors.white),
                 BottomNavigationBarItem(
-                    icon: Icon(FontAwesomeIcons.circleUser, size: 24,),
+                    icon: FaIcon(FontAwesomeIcons.circleUser, size: 24,),
                     label: "Profil",
                     backgroundColor: Colors.white),
               ],

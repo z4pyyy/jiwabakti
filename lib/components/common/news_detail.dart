@@ -62,7 +62,7 @@ class NewsDetailState extends State<NewsDetail>{
           color: themeOptions.primaryColor,
         ),
         child: const Center(
-          child: Icon(FontAwesomeIcons.exclamation, size: 34, color: Colors.white),
+          child: FaIcon(FontAwesomeIcons.exclamation, size: 34, color: Colors.white),
         ),
       ),
       message: Text(
@@ -231,7 +231,7 @@ class NewsDetailState extends State<NewsDetail>{
                       color: Colors.grey[300],
                       borderRadius: const BorderRadius.all(Radius.circular(20)),
                     ),
-                    child: Icon(
+                    child: FaIcon(
                       savedNewsId.contains(widget.id)
                         ? FontAwesomeIcons.solidBookmark
                         : FontAwesomeIcons.bookmark,

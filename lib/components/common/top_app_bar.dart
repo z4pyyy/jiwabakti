@@ -46,7 +46,7 @@ class TopAppBarState extends State<TopAppBar> {
                 child: widget.allowBack
                     ? IconButton(
                         onPressed: () => context.pop(),
-                        icon: const Icon(FontAwesomeIcons.arrowLeftLong, size: 22),
+                        icon: const FaIcon(FontAwesomeIcons.arrowLeftLong, size: 22),
                       )
                     : const SizedBox(),
               ),
